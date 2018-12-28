@@ -18,7 +18,7 @@ app.get('/:room', function (req, res) {
 
 app.get('/api/:room', function (req, res) {
 	//console.log(times[req.params.room]);
-	res.send(times[req.params.room];
+	res.send(""+times[req.params.room];
 });
 
 
