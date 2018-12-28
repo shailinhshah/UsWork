@@ -3,14 +3,15 @@ var path    = require("path");
 const app = express()
 const port = 8080
 
-app.use(express.static('public'));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
+//cow
 var times = {};
 
 app.set('view engine', 'pug')
 
 app.get('/', function (req, res) {
-	res.render('index', { title: 'Hey', message: 'Hello there!' })
+	//res.render('index', { title: 'Hey', message: 'Hello there!' })
 })
 
 app.get('/:room', function (req, res) {
@@ -26,7 +27,7 @@ app.get('/api/:room', function (req, res) {
 
 app.post('/api/:room', function (req, res) {
 	times[req.params.room] = Date.now();
-  res.send("Success");
+  res.send(""+times[req.params.room]);
 });
 
 
