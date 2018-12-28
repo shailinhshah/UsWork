@@ -1,0 +1,16 @@
+<html>
+<script>
+	fetch('https://uswork.today/api/cow')
+  .then(function(response) {
+    return response.text();
+  })
+  .then(function(myJson) {
+    alert(myJson);
+  });
+</script>
+<body>
+	<p id="date"></p>
+</body>
+</html>	
+
+
