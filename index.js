@@ -17,14 +17,15 @@ app.get('/:room', function (req, res) {
 })
 
 app.get('/api/:room', function (req, res) {
-	console.log(times[req.params.room]);
-	res.send(times[req.params.room]);
+	//console.log(times[req.params.room]);
+	res.send(times[req.params.room].toString());
 });
 
+
 app.post('/api/:room', function (req, res) {
-//	times[req.params.room] = Date.now();
-//console.log(times[req.params.room]);
-        res.send('The grind never s');
+	times[req.params.room] = Date.now();
+  res.send("Success");
 });
+
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
