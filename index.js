@@ -13,7 +13,8 @@ app.get('/', function (req, res) {
 })
 
 app.get('/:room', function (req, res) {
-  res.render('room', { room: req.params.room})
+  //res.render('room', { room: req.params.room})
+  res.sendfile(__dirname + '/views/index.html');
 })
 
 app.get('/api/:room', function (req, res) {
