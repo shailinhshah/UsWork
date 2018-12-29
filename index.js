@@ -21,13 +21,15 @@ app.get('/:room', function (req, res) {
 
 app.get('/api/:room', function (req, res) {
 	//console.log(times[req.params.room]);
-	res.send(""+times[req.params.room]);
+	if (times[req.params.room] ===undefined) 
+		times[req.params.room] = 0;
+res.send(""+times[req.params.room]);
 });
 
 
 app.post('/api/:room', function (req, res) {
 	times[req.params.room] = Date.now();
-  res.send(""+times[req.params.room]);
+  	res.send(""+times[req.params.room]);
 });
 
 
