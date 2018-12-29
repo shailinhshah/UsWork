@@ -3,7 +3,7 @@ var path    = require("path");
 const app = express()
 const port = 8080
 
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //cow
 var times = {};
@@ -16,7 +16,7 @@ app.get('/', function (req, res) {
 
 app.get('/:room', function (req, res) {
   //res.render('room', { room: req.params.room})
-  res.sendfile(__dirname + '/views/index.html');
+  res.sendfile(path.join(__dirname, '/public/timer.html'));
 })
 
 app.get('/api/:room', function (req, res) {
