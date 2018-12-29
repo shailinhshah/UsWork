@@ -79,12 +79,12 @@ function join() {
     client.join(channel_key, "1000", null, function(uid) {
       console.log("User " + uid + " join channel successfully");
 
-      if (document.getElementById("video").checked) {
+      if (true) {
         camera = videoSource.value;
         microphone = audioSource.value;
-        localStream = AgoraRTC.createStream({streamID: uid, audio: true, cameraId: camera, microphoneId: microphone, video: document.getElementById("video").checked, screen: false});
+        localStream = AgoraRTC.createStream({streamID: uid, audio: true, cameraId: camera, microphoneId: microphone, video: true, screen: false});
         //localStream = AgoraRTC.createStream({streamID: uid, audio: false, cameraId: camera, microphoneId: microphone, video: false, screen: true, extensionId: 'minllpmhdgpndnkomcoccfekfegnlikg'});
-        if (document.getElementById("video").checked) {
+        if (true) {
           localStream.setVideoProfile('720p_3');
 
         }
