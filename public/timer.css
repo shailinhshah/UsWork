@@ -1,0 +1,53 @@
+p{
+color:red;
+font-size : 20px;
+text-allign : center;
+font-family: "Comic Sans MS", "Comic Sans", cursive;
+
+}
+body{background-color: lightblue;}
+
+button{
+ background:#4da6ff; 
+  border:none; 
+  color:#fff; 
+  cursor:pointer; 
+  padding:5px; 
+  width:90px; 
+  margin:10px auto;
+  font-size:14px;
+  height : 50px;
+  border-radius : 50px;
+}
+
+#container{
+  text-align:center;
+  border:1px solid #333;
+  border-radius :15px;
+  width:200px;
+  margin:20px auto;
+  padding:20px;
+  background : #333;
+  position : absolute;
+}
+#time{ 
+  color:#24C62F;  
+  text-align: center; 
+  font-size:30px; 
+  margin:10px auto;
+  border : 5px solid blue;
+  border-radius:5%;
+  width:100px;
+  height:45px;
+  overflow:hidden;
+  position:relative;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  cursor:default;
+  margin-top:30px;
+  z-index : 1;
+  position:relative;
+
+}

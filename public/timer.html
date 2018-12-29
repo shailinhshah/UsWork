@@ -1,171 +1,237 @@
-
-<style type="text/css" media="screen">
-p{
-color:red;
-font-size : 20px;
-text-allign : center;
-font-family: "Comic Sans MS", "Comic Sans", cursive;
-
-}
-body{background-color: lightblue;}
-
-button{
- background:#4da6ff; 
-  border:none; 
-  color:#fff; 
-  cursor:pointer; 
-  padding:5px; 
-  width:90px; 
-  margin:10px auto;
-  font-size:14px;
-  height : 50px;
-  border-radius : 50px;
-}
-
-#container{
-  text-align:center;
-  border:1px solid #333;
-  border-radius :15px;
-  width:200px;
-  margin:20px auto;
-  padding:20px;
-  background : #333;
-  position : absolute;
-}
-#time{ 
-  color:#24C62F;  
-  text-align: center; 
-  font-size:30px; 
-  margin:10px auto;
-  border : 5px solid blue;
-  border-radius:5%;
-  width:100px;
-  height:45px;
-  overflow:hidden;
-  position:relative;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  cursor:default;
-  margin-top:30px;
-  z-index : 1;
-  position:relative;
-
-}
-
-
-
-</style>
-
 <html>
+<head>Timer</head>
+<link rel="stylesheet" href="timer.css">
 
 <script type="text/javascript" src="AgoraRTCSDK-2.5.0.js"></script>
+<script type="text/javascript" src="timer.js"></script>
 
-<script>
-const url = "https://uswork.today/api/cow";
-const minutes = 10;
-const timerLength = minutes*1000*60;
-var timeElapsed;
-var startTime;
-var endTime;
+<script src="vendor/jquery.js"></script>
+<link rel="stylesheet" href="vendor/bootstrap.min.css">
 
-
-function reqListener () {
- //  document.getElementById("date").innerHTML = this.responseText;
-     endTime = parseInt(this.responseText) + timerLength;
-//   console.log(this.responseText); 
-     //clearTimeout(tick);
-     setTimeout(getTime, 500);
-}
-
-function getTime() {
-  //alert("getTime() called");
-  var oReq = new XMLHttpRequest();
-  oReq.addEventListener("load", reqListener);
-  oReq.open("GET", url);
-  oReq.send();
-//setTimeout(getTime,500);
-}
-
-function postTime() {
-  var http = new XMLHttpRequest();
-  var params = '';
-  http.open('POST', url, true);
-  //Send the proper header information along with the request
-  http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-
-  http.onreadystatechange = function() {//Call a function when the state changes.
-          //endTime = Date.now() + timerLength;
-endTime = parseInt(http.responseText) + timerLength;    
-tick();
-//setTimeout(tick, 1);
-	//getTime();  
-}
-  http.send(params);
- 
-}
-
-function timeRemaining(){
-  //return Math.floor((endTime-Date.now())/1000);
- 
- return ( endTime-Date.now());
-}
-
-window.addEventListener("load", function(event) {
-  getTime();
-  tick();
-
-  document.getElementById("start").addEventListener("click", function(){
-    postTime();
-    
-  });
-
-  document.getElementById("update").addEventListener("click", function(){
-    getTime();
-  });
-});
-
-function tick() {
-var totalSeconds =Math.floor(timeRemaining()/1000);
-var seconds = totalSeconds%60;
-var minutes =(totalSeconds-seconds)/60;
-var zeroVal = "";
-var zVal = "";
-
-if (minutes <10){
- zVal = "0";
-}
-
-
-if (seconds < 10){
-    zeroVal="0";
-}
-if(!(totalSeconds>0)){
-    minutes = 0;
-    seconds = 0;
-    document.getElementById("status").innerHTML = "Status: Completed";
-}
-else{
-	
-}
-//getTime();
-document.getElementById("time").innerHTML =zVal + minutes + ":"+zeroVal+ seconds;
-
-//postTime();
-clearTimeout(tick);  
-setTimeout(tick, 500);
-}
-</script>
-
-
+</head>
 <body>
-
 <div id="container">
 	<p id="date"></p>
 	<p id="time">10:00</p>
 	<p id="status">Status: In Progress...</p>
 	<button id="start">Start</button>
 </div>
+
+<div id="div_device" class="panel panel-default">
+<div class="select">
+<label for="audioSource">Audio source: </label><select id="audioSource"></select>
+</div>
+<div class="select">
+<label for="videoSource">Video source: </label><select id="videoSource"></select>
+</div>
+</div>
+
+<div id="div_join" class="panel panel-default">
+<div class="panel-body">
+
+<button id="join" class="btn btn-primary" onclick="join()">Join</button>
+</div>
+</div>
+
+    <!--style>
+    .video__box{width:910px; margin:0 auto; overflow:hidden;}
+    .video__main{ width:810px; height:607px;float:left }
+    .video__list{ width:200px; height:607px; float:left;}
+    .video__item{ width:200px; height:174px; hei background:url(/img/icon_live.png) center center no-repeat; }
+    </style>
+    <div class="video__main">
+    </div>
+    <div class="video__list">
+        <div class="video__item"></div>
+        <div id="video" class="video__item">
+            <div id="agora_local"></div>
+        </div>
+    </div-->
+
+<div id="video" style="margin:0 auto;">
+    <div id="agora_local" style="float:right;width:210px;height:147px;display:inline-block;"></div>
+</div>
+
+<script language="javascript">
+
+if(!AgoraRTC.checkSystemRequirements()) {
+  alert("Your browser does not support WebRTC!");
+}
+
+/* select Log type */
+// AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.NONE);
+// AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.ERROR);
+// AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.WARNING);
+// AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.INFO);  
+// AgoraRTC.Logger.setLogLevel(AgoraRTC.Logger.DEBUG);
+
+/* simulated data to proof setLogLevel() */
+AgoraRTC.Logger.error('this is error');
+AgoraRTC.Logger.warning('this is warning');
+AgoraRTC.Logger.info('this is info');
+AgoraRTC.Logger.debug('this is debug');
+
+var client, localStream, camera, microphone;
+
+var audioSelect = document.querySelector('select#audioSource');
+var videoSelect = document.querySelector('select#videoSource');
+
+function join() {
+  document.getElementById("join").disabled = true;
+  document.getElementById("video").disabled = true;
+  var channel_key = null;
+
+  console.log("Init AgoraRTC client with App ID: " +"8f25b7dac7d44e81a1e7144c86e7b590");
+  client = AgoraRTC.createClient({mode: 'interop'});
+  client.init("8f25b7dac7d44e81a1e7144c86e7b590", function () {
+    console.log("AgoraRTC client initialized");
+    client.join(channel_key, "1000", null, function(uid) {
+      console.log("User " + uid + " join channel successfully");
+
+      if (true) {
+        camera = videoSource.value;
+        microphone = audioSource.value;
+        localStream = AgoraRTC.createStream({streamID: uid, audio: true, cameraId: camera, microphoneId: microphone, video: true, screen: false});
+        //localStream = AgoraRTC.createStream({streamID: uid, audio: false, cameraId: camera, microphoneId: microphone, video: false, screen: true, extensionId: 'minllpmhdgpndnkomcoccfekfegnlikg'});
+        if (true) {
+          localStream.setVideoProfile('720p_3');
+
+        }
+
+        // The user has granted access to the camera and mic.
+        localStream.on("accessAllowed", function() {
+          console.log("accessAllowed");
+        });
+
+        // The user has denied access to the camera and mic.
+        localStream.on("accessDenied", function() {
+          console.log("accessDenied");
+        });
+
+        localStream.init(function() {
+          console.log("getUserMedia successfully");
+          localStream.play('agora_local');
+
+          client.publish(localStream, function (err) {
+            console.log("Publish local stream error: " + err);
+          });
+
+          client.on('stream-published', function (evt) {
+            console.log("Publish local stream successfully");
+          });
+        }, function (err) {
+          console.log("getUserMedia failed", err);
+        });
+      }
+    }, function(err) {
+      console.log("Join channel failed", err);
+    });
+  }, function (err) {
+    console.log("AgoraRTC client init failed", err);
+  });
+
+  channelKey = "";
+  client.on('error', function(err) {
+    console.log("Got error msg:", err.reason);
+    if (err.reason === 'DYNAMIC_KEY_TIMEOUT') {
+      client.renewChannelKey(channelKey, function(){
+        console.log("Renew channel key successfully");
+      }, function(err){
+        console.log("Renew channel key failed: ", err);
+      });
+    }
+  });
+
+
+  client.on('stream-added', function (evt) {
+    var stream = evt.stream;
+    console.log("New stream added: " + stream.getId());
+    console.log("Subscribe ", stream);
+    client.subscribe(stream, function (err) {
+      console.log("Subscribe stream failed", err);
+    });
+  });
+
+  client.on('stream-subscribed', function (evt) {
+    var stream = evt.stream;
+    console.log("Subscribe remote stream successfully: " + stream.getId());
+    if ($('div#video #agora_remote'+stream.getId()).length === 0) {
+      $('div#video').append('<div id="agora_remote'+stream.getId()+'" style="float:left; width:810px;height:607px;display:inline-block;"></div>');
+    }
+    stream.play('agora_remote' + stream.getId());
+  });
+
+  client.on('stream-removed', function (evt) {
+    var stream = evt.stream;
+    stream.stop();
+    $('#agora_remote' + stream.getId()).remove();
+    console.log("Remote stream is removed " + stream.getId());
+  });
+
+  client.on('peer-leave', function (evt) {
+    var stream = evt.stream;
+    if (stream) {
+      stream.stop();
+      $('#agora_remote' + stream.getId()).remove();
+      console.log(evt.uid + " leaved from this channel");
+    }
+  });
+}
+
+function leave() {
+  document.getElementById("leave").disabled = true;
+  client.leave(function () {
+    console.log("Leavel channel successfully");
+  }, function (err) {
+    console.log("Leave channel failed");
+  });
+}
+
+function publish() {
+  document.getElementById("publish").disabled = true;
+  document.getElementById("unpublish").disabled = false;
+  client.publish(localStream, function (err) {
+    console.log("Publish local stream error: " + err);
+  });
+}
+
+function unpublish() {
+  document.getElementById("publish").disabled = false;
+  document.getElementById("unpublish").disabled = true;
+  client.unpublish(localStream, function (err) {
+    console.log("Unpublish local stream failed" + err);
+  });
+}
+
+function getDevices() {
+  AgoraRTC.getDevices(function (devices) {
+    for (var i = 0; i !== devices.length; ++i) {
+      var device = devices[i];
+      var option = document.createElement('option');
+      option.value = device.deviceId;
+      if (device.kind === 'audioinput') {
+        option.text = device.label || 'microphone ' + (audioSelect.length + 1);
+        audioSelect.appendChild(option);
+      } else if (device.kind === 'videoinput') {
+        option.text = device.label || 'camera ' + (videoSelect.length + 1);
+        videoSelect.appendChild(option);
+      } else {
+        console.log('Some other kind of source/device: ', device);
+      }
+    }
+  });
+}
+
+
+function hashURL(){
+
+}
+
+
+
+//audioSelect.onchange = getDevices;
+//videoSelect.onchange = getDevices;
+getDevices();
+</script>
 </body>
 </html>
