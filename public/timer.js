@@ -1,4 +1,7 @@
-const url = "https://uswork.today/api/cow";
+var oldURL = window.location.href;
+var res = oldURL.split("/")
+roomName = res[res.length-1];
+const url = "https://uswork.today/api/"+roomName ;
 const minutes = 10;
 const timerLength = minutes*1000*60;
 var timeElapsed;
