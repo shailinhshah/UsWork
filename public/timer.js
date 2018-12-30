@@ -68,14 +68,8 @@ var minutes =(totalSeconds-seconds)/60;
 var zeroVal = "";
 var zVal = "";
 
-if (minutes <10){
- zVal = "0";
-}
-
-
-if (seconds < 10){
-    zeroVal="0";
-}
+if (minutes <10){ zVal = "0";}
+if (seconds < 10){ zeroVal="0";}
 if(!(totalSeconds>0)){
     minutes = 0;
     seconds = 0;
@@ -84,10 +78,9 @@ if(!(totalSeconds>0)){
 else{
     document.getElementById("status").innerHTML = "In Progress...";	
 }
-//getTime();
+
 document.getElementById("time").innerHTML =zVal + minutes + ":"+zeroVal+ seconds;
 
-//postTime();
 clearTimeout(tick);  
 setTimeout(tick, 500);
 }
