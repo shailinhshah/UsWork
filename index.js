@@ -12,6 +12,7 @@ app.set('view engine', 'pug')
 
 app.get('/', function (req, res) {
 	//res.render('index', { title: 'Hey', message: 'Hello there!' })
+res.sendfile(path.join(__dirname , '/public/home.html'));
 })
 
 app.get('/:room', function (req, res) {
