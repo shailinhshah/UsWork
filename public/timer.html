@@ -94,7 +94,8 @@ function join() {
   client = AgoraRTC.createClient({mode: 'interop'});
   client.init("8f25b7dac7d44e81a1e7144c86e7b590", function () {
     console.log("AgoraRTC client initialized");
-    client.join(channel_key, "1000", null, function(uid) {
+    channelNumber= hashURL()+ "";
+    client.join(channel_key, channelNumber, null, function(uid) {
       console.log("User " + uid + " join channel successfully");
 
       if (true) {
@@ -233,7 +234,13 @@ function getDevices() {
 
 
 function hashURL(){
-
+    var url = window.location.href;
+    var sum = 0;
+    for (var i=0;i<url.length;i++){
+         sum = sum + url.charCodeAt(i);
+    }
+    alert("using channel : " + sum%1000);
+    return (sum%1000);
 }
 
 

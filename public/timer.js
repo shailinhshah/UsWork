@@ -82,7 +82,7 @@ if(!(totalSeconds>0)){
     document.getElementById("status").innerHTML = "Status: Completed";
 }
 else{
-	
+    document.getElementById("status").innerHTML = "In Progress...";	
 }
 //getTime();
 document.getElementById("time").innerHTML =zVal + minutes + ":"+zeroVal+ seconds;
