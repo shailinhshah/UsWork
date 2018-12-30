@@ -1,14 +1,3 @@
-the spec:
-
-endpoints:
-
-/ -> the homepage
-/:room -> the room page (todo! )
-
-GET /api/:room
- -> gives you the time that the timer started
- -> undefined if there is no timer
-
-PUSH /api/:room
- -> it resets the timer to have started at the current time.
+UsWork is hosted at https://UsWork.Today .
+Navigate there for demo.
 
