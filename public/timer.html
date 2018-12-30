@@ -1,6 +1,6 @@
 <html>
 <head>Timer</head>
-<link rel="stylesheet" href="timer.css">
+
 
 <script type="text/javascript" src="AgoraRTCSDK-2.5.0.js"></script>
 <script type="text/javascript" src="timer.js"></script>
@@ -10,32 +10,41 @@
 
 </head>
 <body>
-<div id="container">
-	<p id="date"></p>
-	<p id="time">10:00</p>
+<div class="container">
+<div class="jumbotron">
+<center>
+	<p id="date" class="h4"></p>
+	<p id="time" class="h4">10:00</p>
 	<p id="status">Status: In Progress...</p>
 	<button id="start">Start</button>
+</center>
 </div>
 
 <div id="div_device" class="panel panel-default">
+<center>
+<ul class="list-group">
+<li class="list-group-item">
 <div class="select">
-<label for="audioSource">Audio source: </label><select id="audioSource"></select>
+<label for="audioSource">Audio source: </label> &nbsp; &nbsp;<select id="audioSource"></select>
 </div>
+</li>
+<li class="list-group-item">
 <div class="select">
 <label for="videoSource">Video source: </label><select id="videoSource"></select>
 </div>
-</div>
+</li>
 
-<div id="div_join" class="panel panel-default">
-<div class="panel-body">
+<li class="list-group-item">
+
+<div id="div_join" >
 
 <button id="join" class="btn btn-primary" onclick="join()">Join</button>
-</div>
+</li>
 </div>
 
     <!--style>
-    .video__box{width:910px; margin:0 auto; overflow:hidden;}
-    .video__main{ width:810px; height:607px;float:left }
+    .video__box{width:200px; margin:0 auto; overflow:hidden;}
+    .video__main{ width:200px; height:174px;float:left }
     .video__list{ width:200px; height:607px; float:left;}
     .video__item{ width:200px; height:174px; hei background:url(/img/icon_live.png) center center no-repeat; }
     </style>
@@ -156,7 +165,7 @@ function join() {
     var stream = evt.stream;
     console.log("Subscribe remote stream successfully: " + stream.getId());
     if ($('div#video #agora_remote'+stream.getId()).length === 0) {
-      $('div#video').append('<div id="agora_remote'+stream.getId()+'" style="float:left; width:810px;height:607px;display:inline-block;"></div>');
+      $('div#video').append('<div id="agora_remote'+stream.getId()+'" style="float:left; width:210px;height:207px;display:inline-block;"></div>');
     }
     stream.play('agora_remote' + stream.getId());
   });
